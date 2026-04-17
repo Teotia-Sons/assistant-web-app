@@ -7,6 +7,7 @@ import { GroundingMetadata } from '../../../../../services/genaiService';
 interface ContentProps {
   content: string;
   isDisplayRaw: boolean;
+  enableMath?: boolean;
   groundingMetadata?: GroundingMetadata;
 }
 
@@ -50,6 +51,7 @@ function processContentWithGrounding(
 export default function Content({
   content,
   isDisplayRaw,
+  enableMath,
   groundingMetadata,
 }: ContentProps) {
   const [showReferences, setShowReferences] = useState(false);
@@ -82,7 +84,7 @@ export default function Content({
       {isDisplayRaw ? (
         <RawTextView content={processedContent} />
       ) : (
-        <MarkdownView content={processedContent} />
+        <MarkdownView content={processedContent} enableMath={enableMath} />
       )}
     </div>
   );

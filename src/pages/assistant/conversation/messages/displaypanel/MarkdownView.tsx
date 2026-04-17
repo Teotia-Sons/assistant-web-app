@@ -13,9 +13,13 @@ import 'katex/dist/katex.min.css';
 
 interface MarkdownViewProps {
   content: string;
+  enableMath?: boolean;
 }
 
-export default function MarkdownView({ content }: MarkdownViewProps) {
+export default function MarkdownView({
+  content,
+  enableMath = false,
+}: MarkdownViewProps) {
   const handleCopy = async (code: string) => {
     await navigator.clipboard.writeText(code);
   };
@@ -24,8 +28,8 @@ export default function MarkdownView({ content }: MarkdownViewProps) {
     <ReactMarkdown
       key={md5(content ?? 'empty')}
       className="prose prose-invert max-w-none"
-      remarkPlugins={[remarkGfm, remarkMath]}
-      rehypePlugins={[rehypeRaw, rehypeKatex]}
+      remarkPlugins={[remarkGfm, ...(enableMath ? [remarkMath] : [])]}
+      rehypePlugins={[rehypeRaw, ...(enableMath ? [rehypeKatex] : [])]}
       components={{
         code(props) {
           const { children, className, ...rest } = props;

@@ -14,10 +14,14 @@ export default function AIMessage({ message }: AIMessageProps) {
   const content = message.content;
   const [isThinkingCollapsed, setIsThinkingCollapsed] = useState(true);
   const [isDisplayRaw, setIsDisplayRaw] = useState(false);
+  const [enableMath, setEnableMath] = useState(false);
 
   const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
     if (event.ctrlKey && event.key === 'r') {
       setIsDisplayRaw(prevIsDisplayRaw => !prevIsDisplayRaw);
+    }
+    if (event.ctrlKey && event.key === 'm') {
+      setEnableMath(prev => !prev);
     }
   }, []);
 
@@ -40,7 +44,11 @@ export default function AIMessage({ message }: AIMessageProps) {
         />
       )}
       {content.text && (
-        <Content content={content.text} isDisplayRaw={isDisplayRaw} />
+        <Content
+          content={content.text}
+          isDisplayRaw={isDisplayRaw}
+          enableMath={enableMath}
+        />
       )}
     </MessagePanel>
   );
