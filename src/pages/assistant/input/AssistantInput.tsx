@@ -4,8 +4,9 @@ import {
   PlusIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
+import classNames from 'classnames';
 import React, { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 import RoleSelector, { RoleType } from './RoleSelector';
 import TextArea from './TextArea';
@@ -89,10 +90,6 @@ export default function AssistantInput() {
     [navigate],
   );
 
-  const handleNewChat = useCallback(() => {
-    navigate('/');
-  }, [navigate]);
-
   const handleDelete = useCallback(async () => {
     await deleteConversation(conversation!.id);
     navigate(-1);
@@ -104,13 +101,15 @@ export default function AssistantInput() {
         <div className="flex gap-2">
           {conversation?.id && (
             <>
-              <button
-                onClick={handleNewChat}
-                disabled={isProcessing}
-                className="neu-up rounded-full p-2 disabled:opacity-50"
+              <Link
+                to="/"
+                onClick={e => isProcessing && e.preventDefault()}
+                className={classNames('neu-up rounded-full p-2', {
+                  'opacity-50': isProcessing,
+                })}
               >
                 <PlusIcon className="size-4" />
-              </button>
+              </Link>
               <button
                 onClick={handleDelete}
                 disabled={isProcessing}
