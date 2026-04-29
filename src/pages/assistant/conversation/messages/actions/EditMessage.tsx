@@ -1,9 +1,6 @@
-import {
-  CheckIcon,
-  PaperAirplaneIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
+import { PaperAirplaneIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import classnames from 'classnames';
+import { Save } from 'lucide-react';
 import { useState } from 'react';
 
 import {
@@ -94,7 +91,7 @@ export default function EditMessage({
           <XMarkIcon className="size-4" />
         </button>
         <button onClick={handleSubmit} className="rounded-full p-2">
-          <CheckIcon className="size-4" />
+          <Save className="size-4" />
         </button>
         <button onClick={handleTrimAndSubmit} className="rounded-full p-2">
           <PaperAirplaneIcon className="size-4" />

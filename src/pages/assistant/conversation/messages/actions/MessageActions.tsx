@@ -1,5 +1,6 @@
-import { ScissorsIcon, Square2StackIcon } from '@heroicons/react/24/outline';
+import { ScissorsIcon } from '@heroicons/react/24/outline';
 import classnames from 'classnames';
+import { GitFork } from 'lucide-react';
 import { ReactNode } from 'react';
 
 import { useMessageActions } from '../hooks/useMessageActions';
@@ -29,7 +30,7 @@ export default function MessageActions({
   };
 
   return (
-    <div className={'flex justify-between'}>
+    <div className={'flex justify-between gap-4'}>
       <div className={'flex gap-2'}>{actions}</div>
       <div className={'flex gap-2'}>
         <ScissorsIcon
@@ -37,11 +38,7 @@ export default function MessageActions({
           onClick={() => !disabled && handleTrim()}
           title="Trim"
         />
-        <Square2StackIcon
-          className={iconClassName}
-          onMouseDown={handleForkClick}
-          title="Fork"
-        />
+        <GitFork className={iconClassName} onMouseDown={handleForkClick} />
       </div>
     </div>
   );
