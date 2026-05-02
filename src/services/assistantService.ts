@@ -39,14 +39,40 @@ export interface AIMessageMetadata extends MessageMetadata {
   reasoning?: string;
 }
 
+interface GeminiContentBlock {
+  type: string;
+  text?: string;
+  thinking?: string;
+}
+
+interface GrokTextBlock {
+  type: 'text';
+  text: string;
+}
+
+interface GrokReasoningBlock {
+  type: 'reasoning';
+  summary: { type: string; text: string }[];
+}
+
+interface GrokWebSearchCallBlock {
+  type: 'web_search_call';
+  action: { type: string; query?: string; url?: string };
+}
+
+type GrokContentBlock =
+  | GrokTextBlock
+  | GrokReasoningBlock
+  | GrokWebSearchCallBlock;
+
+type ContentBlock = string | GeminiContentBlock | GrokContentBlock;
+
 interface RawMessage {
   additional_kwargs: MessageMetadata | AIMessageMetadata;
   type: MessageType;
   id: string;
   usage_metadata: UsageMetadata;
-  content:
-    | string
-    | (string | { type: string; text?: string; thinking?: string })[];
+  content: string | ContentBlock[];
 }
 
 export interface RawConversationType {
@@ -105,6 +131,24 @@ export function aggregateContent(message: RawMessage): Content {
         }
         if (item.type === 'thinking') {
           aggregatedContent.thinking += item.thinking!;
+        }
+        if (item.type === 'reasoning') {
+          const reasoningItem = item as GrokReasoningBlock;
+          for (const summaryItem of reasoningItem.summary) {
+            if (summaryItem.text) {
+              aggregatedContent.thinking += summaryItem.text + '\n\n';
+            }
+          }
+        }
+        if (item.type === 'web_search_call') {
+          const webSearchItem = item as GrokWebSearchCallBlock;
+          const action = webSearchItem.action;
+          if (action.type === 'search' && action.query) {
+            aggregatedContent.thinking += `[Web Search] ${action.query}\n\n`;
+          }
+          if (action.type === 'open_page' && action.url) {
+            aggregatedContent.thinking += `[Open Page] ${action.url}\n\n`;
+          }
         }
       }
     }

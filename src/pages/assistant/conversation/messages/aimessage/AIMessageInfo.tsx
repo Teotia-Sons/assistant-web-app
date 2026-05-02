@@ -45,13 +45,13 @@ export default function AIMessageInfo({ message }: AIMessageInfoProps) {
             )}
             {cost && (
               <div>
-                <div className="font-semibold">Cost</div>
+                <div className="font-semibold">Cost (¢)</div>
                 {cost.cache_read > 0 && (
-                  <div>Cache R: ${cost.cache_read.toFixed(4)}</div>
+                  <div>Cache R: {(cost.cache_read * 100).toFixed(2)}</div>
                 )}
-                <div>In: ${cost.input.toFixed(4)}</div>
-                <div>Out: ${cost.output.toFixed(4)}</div>
-                <div>Total: ${cost.total.toFixed(4)}</div>
+                <div>In: {(cost.input * 100).toFixed(2)}</div>
+                <div>Out: {(cost.output * 100).toFixed(2)}</div>
+                <div>Total: {(cost.total * 100).toFixed(2)}</div>
               </div>
             )}
             <div>

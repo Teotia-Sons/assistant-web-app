@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { ModelTag, ReasoningEffort } from '../../../services/models';
 import { ModelConfig, useAppStore } from '../../../store';
 
@@ -7,10 +9,16 @@ const getDefaultReasoningEffort = (model: ModelTag): ReasoningEffort => {
   return ReasoningEffort.NONE;
 };
 
+const shouldHideReasoningEffort = (model: ModelTag): boolean => {
+  return [ModelTag.OPUS, ModelTag.GROK].includes(model);
+};
+
 const MODEL_LABELS: Record<ModelTag, string> = {
-  [ModelTag.GEMINI_FLASH]: 'Gemini Flash',
   [ModelTag.GEMINI_PRO]: 'Gemini Pro',
   [ModelTag.GPT_OSS]: 'GPT OSS',
+  [ModelTag.GROK]: 'Grok',
+  [ModelTag.OPUS]: 'Opus',
+  [ModelTag.GPT]: 'GPT',
 };
 
 export default function ModelConfigSelector({
@@ -19,6 +27,9 @@ export default function ModelConfigSelector({
   disabled?: boolean;
 }) {
   const { modelConfig, setModelConfig, setDefaultModelConfig } = useAppStore();
+  const [hideReasoningEffort, setHideReasoningEffort] = useState(
+    shouldHideReasoningEffort(modelConfig.modelInstance),
+  );
 
   const setConfig = (config: ModelConfig) => {
     setModelConfig(config);
@@ -30,6 +41,7 @@ export default function ModelConfigSelector({
       modelInstance: model,
       reasoningEffort: getDefaultReasoningEffort(model),
     });
+    setHideReasoningEffort(shouldHideReasoningEffort(model));
   };
 
   const handleReasoningEffortChange = (effort: ReasoningEffort) => {
@@ -48,29 +60,31 @@ export default function ModelConfigSelector({
         disabled={disabled}
         className="px-3 py-1 disabled:opacity-50"
       >
-        <option value={ModelTag.GPT_OSS}>
-          {MODEL_LABELS[ModelTag.GPT_OSS]}
-        </option>
-        <option value={ModelTag.GEMINI_FLASH}>
-          {MODEL_LABELS[ModelTag.GEMINI_FLASH]}
-        </option>
+        <option value={ModelTag.GROK}>{MODEL_LABELS[ModelTag.GROK]}</option>
         <option value={ModelTag.GEMINI_PRO}>
           {MODEL_LABELS[ModelTag.GEMINI_PRO]}
         </option>
+        <option value={ModelTag.OPUS}>{MODEL_LABELS[ModelTag.OPUS]}</option>
+        <option value={ModelTag.GPT}>{MODEL_LABELS[ModelTag.GPT]}</option>
+        <option value={ModelTag.GPT_OSS}>
+          {MODEL_LABELS[ModelTag.GPT_OSS]}
+        </option>
       </select>
-      <select
-        tabIndex={1}
-        value={modelConfig.reasoningEffort}
-        onChange={e =>
-          handleReasoningEffortChange(e.target.value as ReasoningEffort)
-        }
-        disabled={disabled}
-        className="px-3 py-1 disabled:opacity-50"
-      >
-        <option value={ReasoningEffort.NONE}>None</option>
-        <option value={ReasoningEffort.LOW}>Low</option>
-        <option value={ReasoningEffort.HIGH}>High</option>
-      </select>
+      {!hideReasoningEffort && (
+        <select
+          tabIndex={1}
+          value={modelConfig.reasoningEffort}
+          onChange={e =>
+            handleReasoningEffortChange(e.target.value as ReasoningEffort)
+          }
+          disabled={disabled}
+          className="px-3 py-1 disabled:opacity-50"
+        >
+          <option value={ReasoningEffort.NONE}>None</option>
+          <option value={ReasoningEffort.LOW}>Low</option>
+          <option value={ReasoningEffort.HIGH}>High</option>
+        </select>
+      )}
     </div>
   );
 }

@@ -31,14 +31,14 @@ export const useAppStore = create<AppStore>()(
     set => ({
       prompt: '',
       modelConfig: {
-        modelInstance: ModelTag.GEMINI_FLASH,
+        modelInstance: ModelTag.GROK,
         reasoningEffort: ReasoningEffort.NONE,
       },
       setPrompt: (prompt: string) => set({ prompt }),
       setModelConfig: (modelConfig: ModelConfig) => set({ modelConfig }),
 
       defaultModelConfig: {
-        modelInstance: ModelTag.GEMINI_FLASH,
+        modelInstance: ModelTag.GROK,
         reasoningEffort: ReasoningEffort.NONE,
       },
       setDefaultModelConfig: (modelConfig: ModelConfig) =>
