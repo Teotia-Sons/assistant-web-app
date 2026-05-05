@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { useNavigate } from 'react-router';
 
 import {
   forkConversation,
@@ -7,6 +8,7 @@ import {
 import { useAssistantStore } from '../../../../../stores/assistantStore';
 
 export function useMessageActions(messageId: string) {
+  const navigate = useNavigate();
   const { conversation, setConversation, setIsProcessing } =
     useAssistantStore();
 
@@ -32,11 +34,11 @@ export function useMessageActions(messageId: string) {
         messageId,
         selectedText,
       );
-      window.open(`/${forkedConversation.id}`, '_blank');
+      navigate(`/${forkedConversation.id}`);
     } finally {
       setIsProcessing(false);
     }
-  }, [conversation, setIsProcessing, messageId]);
+  }, [conversation, setIsProcessing, messageId, navigate]);
 
   return { handleTrim, handleFork };
 }
