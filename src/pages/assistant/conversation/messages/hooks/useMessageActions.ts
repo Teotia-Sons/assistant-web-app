@@ -34,7 +34,10 @@ export function useMessageActions(messageId: string) {
         messageId,
         selectedText,
       );
-      navigate(`/${forkedConversation.id}`);
+      const newWindow = window.open(`/${forkedConversation.id}`, '_blank');
+      if (!newWindow) {
+        navigate(`/${forkedConversation.id}`);
+      }
     } finally {
       setIsProcessing(false);
     }
