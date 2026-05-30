@@ -34,6 +34,11 @@ export default function AIMessageInfo({ message }: AIMessageInfoProps) {
                     Cache R: {usageMetadata.input_token_details.cache_read}
                   </div>
                 ) : null}
+                {usageMetadata.input_token_details?.cache_creation ? (
+                  <div>
+                    Cache W: {usageMetadata.input_token_details.cache_creation}
+                  </div>
+                ) : null}
                 <div>In: {usageMetadata.input_tokens}</div>
                 <div>Out: {usageMetadata.output_tokens}</div>
                 {usageMetadata.output_token_details?.reasoning ? (
@@ -48,6 +53,9 @@ export default function AIMessageInfo({ message }: AIMessageInfoProps) {
                 <div className="font-semibold">Cost (¢)</div>
                 {cost.cache_read > 0 && (
                   <div>Cache R: {(cost.cache_read * 100).toFixed(2)}</div>
+                )}
+                {cost.cache_write > 0 && (
+                  <div>Cache W: {(cost.cache_write * 100).toFixed(2)}</div>
                 )}
                 <div>In: {(cost.input * 100).toFixed(2)}</div>
                 <div>Out: {(cost.output * 100).toFixed(2)}</div>

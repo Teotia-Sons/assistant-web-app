@@ -14,6 +14,7 @@ interface Cost {
 
 interface InputTokenDetails {
   cache_read: number;
+  cache_creation: number;
 }
 
 interface OutputTokenDetails {
