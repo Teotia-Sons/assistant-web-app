@@ -119,13 +119,15 @@ export default function AssistantInput() {
               </button>
             </>
           )}
-          <button
-            onClick={() => navigate('/history')}
-            disabled={isProcessing}
-            className="neu-up rounded-full p-2 disabled:opacity-50"
+          <Link
+            to="/history"
+            onClick={e => isProcessing && e.preventDefault()}
+            className={classNames('neu-up rounded-full p-2', {
+              'opacity-50': isProcessing,
+            })}
           >
             <ClockIcon className="size-4" />
-          </button>
+          </Link>
         </div>
         <div className="flex gap-2">
           <ModelConfigSelector disabled={isProcessing} />

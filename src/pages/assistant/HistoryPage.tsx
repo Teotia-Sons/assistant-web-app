@@ -1,7 +1,7 @@
 import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/outline';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 
 import Loader from '../../components/Loader';
 import {
@@ -15,8 +15,6 @@ export default function HistoryPage() {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState('');
-  const navigate = useNavigate();
-
   useEffect(() => {
     listConversations({ query })
       .then(setConversations)
@@ -30,10 +28,6 @@ export default function HistoryPage() {
       </div>
     );
   }
-
-  const handleNewChat = () => {
-    navigate('/');
-  };
 
   return (
     <div className="flex h-screen flex-col items-center gap-4 p-4">
@@ -64,12 +58,9 @@ export default function HistoryPage() {
           className={'flex-1'}
         />
         <div className={'flex flex-1 justify-end'}>
-          <button
-            onClick={handleNewChat}
-            className={'self-end rounded-full p-2'}
-          >
+          <Link to="/" className={'self-end rounded-full p-2'}>
             <ChatBubbleBottomCenterTextIcon className="size-4" />
-          </button>
+          </Link>
         </div>
       </div>
     </div>
