@@ -31,6 +31,7 @@ export default function HistoryPage() {
 
   return (
     <div className="flex h-screen flex-col items-center gap-4 p-4">
+      <title>History</title>
       <div className="neu-up flex min-w-96 flex-grow flex-col items-center gap-2 overflow-auto">
         {conversations.map(conv => (
           <Link

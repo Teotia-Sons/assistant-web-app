@@ -24,6 +24,7 @@ function LoginForm({ onLoginHook }: LoginPageComponentParams) {
 
   return (
     <div className={'flex flex-col items-center space-y-4 p-8'}>
+      <title>Sign in</title>
       <button className={'px-4 py-2'} onClick={() => handleLoginClick()}>
         Sign in
       </button>

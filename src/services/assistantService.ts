@@ -101,6 +101,7 @@ export interface Message {
 
 export interface ConversationType {
   id: string;
+  title: string;
   messages: {
     type: MessageType;
     data: Message;
