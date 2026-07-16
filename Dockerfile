@@ -1,10 +1,12 @@
-FROM node:18-alpine AS build
+FROM node:24-alpine AS build
 
 WORKDIR /app
 
-COPY package*.json ./
+RUN corepack enable
 
-RUN npm install
+COPY package.json pnpm-lock.yaml ./
+
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
@@ -14,7 +16,7 @@ ENV REACT_APP_GOOGLE_CLIENT_ID=$REACT_APP_GOOGLE_CLIENT_ID
 ARG REACT_APP_PRODUCTION_BASE_URL
 ENV REACT_APP_PRODUCTION_BASE_URL=$REACT_APP_PRODUCTION_BASE_URL
 
-RUN npm run build
+RUN pnpm run build
 
 FROM nginx:alpine
 
