@@ -38,6 +38,7 @@ export interface AIMessageMetadata extends MessageMetadata {
   invocation_time: string;
   latency: number;
   reasoning?: string;
+  model_name?: string;
 }
 
 interface GeminiContentBlock {

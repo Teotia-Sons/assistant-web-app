@@ -12,7 +12,7 @@ interface AIMessageInfoProps {
 
 export default function AIMessageInfo({ message }: AIMessageInfoProps) {
   const usageMetadata = message.usage_metadata;
-  const { cost, invocation_time, creation_time, latency } =
+  const { cost, invocation_time, creation_time, latency, model_name } =
     message.additional_kwargs as AIMessageMetadata;
   const [isVisible, setIsVisible] = useState(false);
 
@@ -29,6 +29,7 @@ export default function AIMessageInfo({ message }: AIMessageInfoProps) {
             {usageMetadata && (
               <div>
                 <div className="font-semibold">Usage</div>
+                {model_name && <div>Model: {model_name}</div>}
                 {usageMetadata.input_token_details?.cache_read ? (
                   <div>
                     Cache R: {usageMetadata.input_token_details.cache_read}
