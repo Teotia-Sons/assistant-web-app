@@ -41,7 +41,6 @@ export default function MessagePanel({
         className,
       )}
       onKeyDown={handleKeyDown}
-      tabIndex={0}
     >
       {children}
       <MessageActions
