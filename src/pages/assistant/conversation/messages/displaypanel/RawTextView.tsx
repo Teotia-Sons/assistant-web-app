@@ -5,5 +5,5 @@ interface RawDisplayPanelProps {
 }
 
 export default function RawTextView({ content }: RawDisplayPanelProps) {
-  return <pre className="prose prose-invert w-full text-wrap">{content}</pre>;
+  return <pre className="w-full text-wrap">{content}</pre>;
 }

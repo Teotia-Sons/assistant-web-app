@@ -59,7 +59,7 @@ export default function Conversation() {
       ref={containerRef}
       onScroll={handleScroll}
       className={classnames(
-        'neu-down relative flex h-full flex-col gap-4 overflow-auto p-4',
+        'relative flex h-full flex-col gap-4 overflow-auto p-2',
         { 'opacity-50': isProcessing },
       )}
     >

@@ -3,13 +3,11 @@ import AssistantInput from './input/AssistantInput';
 
 export default function AssistantPage() {
   return (
-    <div className="flex h-screen flex-col">
-      <div className="h-2/3 p-2">
+    <div className="flex h-screen flex-col gap-4 p-3">
+      <div className="min-h-0 flex-grow p-2">
         <Conversation />
       </div>
-      <div className="h-1/3 p-2">
-        <AssistantInput />
-      </div>
+      <AssistantInput />
     </div>
   );
 }

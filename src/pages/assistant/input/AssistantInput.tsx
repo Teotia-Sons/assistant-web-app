@@ -1,11 +1,13 @@
 import {
+  ChevronDownIcon,
+  ChevronUpIcon,
   ClockIcon,
   PaperAirplaneIcon,
   PlusIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 
 import RoleSelector, { RoleType } from './RoleSelector';
@@ -25,6 +27,21 @@ export default function AssistantInput() {
   const { conversation, setConversation, isProcessing, setIsProcessing } =
     useAssistantStore();
   const [role, setRole] = useState<RoleType>('human');
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const setInputExpanded = useCallback((expanded: boolean) => {
+    setIsCollapsed(!expanded);
+    if (expanded) {
+      textAreaRef.current?.focus();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!conversation) {
+      setInputExpanded(true);
+    }
+  }, [conversation, setInputExpanded]);
 
   const handleAppend = useCallback(async () => {
     if (!prompt.trim()) {
@@ -96,9 +113,9 @@ export default function AssistantInput() {
   }, [conversation, navigate]);
 
   return (
-    <div className="relative flex h-full flex-col gap-2">
+    <div className="flex flex-col">
       <div className="flex items-center justify-between">
-        <div className="flex gap-2">
+        <div className="flex flex-1 gap-2">
           {conversation?.id && (
             <>
               <Link
@@ -129,19 +146,35 @@ export default function AssistantInput() {
             <ClockIcon className="size-4" />
           </Link>
         </div>
-        <div className="flex gap-2">
+        <button
+          onClick={() => setInputExpanded(isCollapsed)}
+          className="rounded-full p-2"
+        >
+          {isCollapsed ? (
+            <ChevronUpIcon className="size-4" />
+          ) : (
+            <ChevronDownIcon className="size-4" />
+          )}
+        </button>
+        <div className="flex flex-1 justify-end gap-2">
           <ModelConfigSelector disabled={isProcessing} />
           <button
             onClick={handleSubmit}
             disabled={isProcessing}
-            className="neu-up rounded-full p-2 disabled:opacity-50"
+            className="rounded-full p-2 disabled:opacity-50"
           >
             <PaperAirplaneIcon className="size-4" />
           </button>
         </div>
       </div>
-      <div className="flex-grow">
+      <div
+        className={classNames(
+          'relative overflow-hidden transition-all duration-300 ease-in-out',
+          isCollapsed ? 'h-0' : 'mt-2 h-48',
+        )}
+      >
         <TextArea
+          ref={textAreaRef}
           value={prompt}
           onChange={setPrompt}
           onSave={handleAppend}
@@ -150,9 +183,13 @@ export default function AssistantInput() {
           disabled={isProcessing}
           autoFocus
         />
-      </div>
-      <div className="absolute bottom-2 right-2">
-        <RoleSelector value={role} onChange={setRole} disabled={isProcessing} />
+        <div className="absolute bottom-2 right-2">
+          <RoleSelector
+            value={role}
+            onChange={setRole}
+            disabled={isProcessing}
+          />
+        </div>
       </div>
     </div>
   );

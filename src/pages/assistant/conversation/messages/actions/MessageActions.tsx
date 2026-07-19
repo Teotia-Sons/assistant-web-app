@@ -31,8 +31,8 @@ export default function MessageActions({
 
   return (
     <div className={'flex justify-between gap-4'}>
-      <div className={'flex gap-2'}>{actions}</div>
-      <div className={'flex gap-2'}>
+      <div className={'flex gap-4'}>{actions}</div>
+      <div className={'flex gap-4'}>
         <ScissorsIcon
           className={iconClassName}
           onClick={() => !disabled && handleTrim()}

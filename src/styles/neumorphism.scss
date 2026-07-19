@@ -2,13 +2,15 @@ $neumorphic-upper-shadow: #1a1a1a;
 $neumorphic-lower-shadow: #292929;
 
 @mixin neumorphic($x, $y, $blur) {
-  box-shadow: #{$x}px #{$y}px #{$blur}px $neumorphic-lower-shadow,
-  #{-$x}px #{-$y}px #{$blur}px $neumorphic-upper-shadow;
+  box-shadow:
+    #{$x}px #{$y}px #{$blur}px $neumorphic-lower-shadow,
+    #{-$x}px #{-$y}px #{$blur}px $neumorphic-upper-shadow;
 }
 
 @mixin neumorphic_inset($x, $y, $blur) {
-  box-shadow: inset #{$x}px #{$y}px #{$blur}px $neumorphic-lower-shadow,
-  inset #{-$x}px #{-$y}px #{$blur}px $neumorphic-upper-shadow;
+  box-shadow:
+    inset #{$x}px #{$y}px #{$blur}px $neumorphic-lower-shadow,
+    inset #{-$x}px #{-$y}px #{$blur}px $neumorphic-upper-shadow;
 }
 
 .neu-up {

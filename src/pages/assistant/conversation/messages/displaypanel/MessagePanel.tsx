@@ -37,7 +37,7 @@ export default function MessagePanel({
   return (
     <div
       className={classNames(
-        'neu-up flex min-w-24 flex-col gap-2 px-4 py-2',
+        'flex min-w-24 flex-col gap-2 px-4 py-2',
         className,
       )}
       onKeyDown={handleKeyDown}

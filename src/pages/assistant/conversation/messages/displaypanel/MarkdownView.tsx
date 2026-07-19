@@ -27,7 +27,7 @@ export default function MarkdownView({
   return (
     <ReactMarkdown
       key={md5(content ?? 'empty')}
-      className="prose prose-invert max-w-none"
+      className="markdown"
       remarkPlugins={[remarkGfm, ...(enableMath ? [remarkMath] : [])]}
       rehypePlugins={[rehypeRaw, ...(enableMath ? [rehypeKatex] : [])]}
       components={{
