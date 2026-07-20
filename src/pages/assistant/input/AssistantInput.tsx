@@ -57,6 +57,7 @@ export default function AssistantInput() {
       );
       setConversation(updatedConversation);
       setPrompt('');
+      setInputExpanded(false);
 
       if (!conversation) {
         navigate(`/${updatedConversation.id}`);
@@ -72,6 +73,7 @@ export default function AssistantInput() {
     setPrompt,
     setConversation,
     setIsProcessing,
+    setInputExpanded,
   ]);
 
   const handleInvoke = useCallback(async () => {
