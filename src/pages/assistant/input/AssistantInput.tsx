@@ -95,6 +95,11 @@ export default function AssistantInput() {
     await handleInvoke();
   }, [handleAppend, handleInvoke]);
 
+  const handleNewConversation = useCallback(() => {
+    setConversation(null);
+    navigate('/');
+  }, [navigate, setConversation]);
+
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
       if (event.ctrlKey && (event.key === 'n' || event.key === 'N')) {
@@ -102,17 +107,18 @@ export default function AssistantInput() {
         if (event.shiftKey) {
           window.open('/', '_blank');
         } else {
-          navigate('/');
+          handleNewConversation();
         }
       }
     },
-    [navigate],
+    [handleNewConversation],
   );
 
   const handleDelete = useCallback(async () => {
     await deleteConversation(conversation!.id);
+    setConversation(null);
     navigate(-1);
-  }, [conversation, navigate]);
+  }, [conversation, navigate, setConversation]);
 
   return (
     <div className="flex flex-col">
@@ -120,15 +126,13 @@ export default function AssistantInput() {
         <div className="flex flex-1 gap-2">
           {conversation?.id && (
             <>
-              <Link
-                to="/"
-                onClick={e => isProcessing && e.preventDefault()}
-                className={classNames('neu-up rounded-full p-2', {
-                  'opacity-50': isProcessing,
-                })}
+              <button
+                onClick={handleNewConversation}
+                disabled={isProcessing}
+                className="neu-up rounded-full p-2 disabled:opacity-50"
               >
                 <PlusIcon className="size-4" />
-              </Link>
+              </button>
               <button
                 onClick={handleDelete}
                 disabled={isProcessing}

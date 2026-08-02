@@ -63,7 +63,7 @@ export default function Conversation() {
         { 'opacity-50': isProcessing },
       )}
     >
-      <title>{conversation?.title}</title>
+      {conversation?.title && <title>{conversation.title}</title>}
       {conversation?.messages.map(({ data: message }) => {
         if (message.type === 'human') {
           return <HumanMessage key={message.id} message={message} />;
