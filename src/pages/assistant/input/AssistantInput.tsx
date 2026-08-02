@@ -169,30 +169,27 @@ export default function AssistantInput() {
           </button>
         </div>
       </div>
-      <div
-        className={classNames(
-          'relative overflow-hidden transition-all duration-300 ease-in-out',
-          isCollapsed ? 'h-0' : 'mt-2 h-48',
-        )}
-      >
-        <TextArea
-          ref={textAreaRef}
-          value={prompt}
-          onChange={setPrompt}
-          onSave={handleAppend}
-          onSubmit={handleSubmit}
-          onKeyDown={handleKeyDown}
-          disabled={isProcessing}
-          autoFocus
-        />
-        <div className="absolute bottom-2 right-2">
-          <RoleSelector
-            value={role}
-            onChange={setRole}
+      {!isCollapsed && (
+        <div className="relative mt-2 h-48">
+          <TextArea
+            ref={textAreaRef}
+            value={prompt}
+            onChange={setPrompt}
+            onSave={handleAppend}
+            onSubmit={handleSubmit}
+            onKeyDown={handleKeyDown}
             disabled={isProcessing}
+            autoFocus
           />
+          <div className="absolute bottom-2 right-2">
+            <RoleSelector
+              value={role}
+              onChange={setRole}
+              disabled={isProcessing}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

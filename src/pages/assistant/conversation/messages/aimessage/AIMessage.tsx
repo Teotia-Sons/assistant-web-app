@@ -1,4 +1,10 @@
-import { KeyboardEvent, useCallback, useState } from 'react';
+import {
+  CalculatorIcon,
+  EyeIcon,
+  HashtagIcon,
+} from '@heroicons/react/24/outline';
+import { CalculatorIcon as SolidCalculatorIcon } from '@heroicons/react/24/solid';
+import { useState } from 'react';
 
 import AIMessageInfo from './AIMessageInfo';
 import { Message } from '../../../../../services/assistantService';
@@ -16,23 +22,37 @@ export default function AIMessage({ message }: AIMessageProps) {
   const [isDisplayRaw, setIsDisplayRaw] = useState(false);
   const [enableMath, setEnableMath] = useState(false);
 
-  const handleKeyDown = useCallback((event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.ctrlKey && event.key === 'r') {
-      setIsDisplayRaw(prevIsDisplayRaw => !prevIsDisplayRaw);
-    }
-    if (event.ctrlKey && event.key === 'm') {
-      setEnableMath(prev => !prev);
-    }
-  }, []);
-
   return (
     <MessagePanel
       messageId={message.id}
-      onKeyDown={handleKeyDown}
       actions={
         // The usage metadata would be absent for forked conversations with text
         // selections of AI messages
-        message.usage_metadata ? <AIMessageInfo message={message} /> : null
+        <>
+          {message.usage_metadata ? <AIMessageInfo message={message} /> : null}
+          {isDisplayRaw ? (
+            <EyeIcon
+              className="size-4 hover:cursor-pointer"
+              onClick={() => setIsDisplayRaw(false)}
+            />
+          ) : (
+            <HashtagIcon
+              className="size-4 hover:cursor-pointer"
+              onClick={() => setIsDisplayRaw(true)}
+            />
+          )}
+          {enableMath ? (
+            <SolidCalculatorIcon
+              className="size-4 hover:cursor-pointer"
+              onClick={() => setEnableMath(false)}
+            />
+          ) : (
+            <CalculatorIcon
+              className="size-4 hover:cursor-pointer"
+              onClick={() => setEnableMath(true)}
+            />
+          )}
+        </>
       }
     >
       {content.thinking && (

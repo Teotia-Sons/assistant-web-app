@@ -37,7 +37,7 @@ export default function HumanMessage({ message }: HumanMessageProps) {
   return (
     <MessagePanel
       messageId={messageId}
-      className="neu-up max-w-[80%] self-end"
+      className="neu-up max-w-[80%] self-end px-4 py-2"
       actions={
         <PencilIcon
           className={classnames('size-4 hover:cursor-pointer', {
