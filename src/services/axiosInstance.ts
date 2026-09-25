@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const BASE_URL =
   process.env.NODE_ENV === 'development'
-    ? 'http://localhost:5001'
+    ? 'http://localhost:5006'
     : process.env.REACT_APP_PRODUCTION_BASE_URL;
 
 export const axiosInstance = axios.create({

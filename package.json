@@ -46,7 +46,7 @@
     "zustand": "^5.0.12"
   },
   "scripts": {
-    "start": "BROWSER=none PORT=3001 react-scripts start",
+    "start": "BROWSER=none PORT=5005 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "lint": "eslint .",
