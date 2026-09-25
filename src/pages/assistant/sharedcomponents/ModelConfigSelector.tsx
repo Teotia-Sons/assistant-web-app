@@ -10,7 +10,9 @@ const getDefaultReasoningEffort = (model: ModelTag): ReasoningEffort => {
 };
 
 const shouldHideReasoningEffort = (model: ModelTag): boolean => {
-  return [ModelTag.OPUS, ModelTag.FABLE, ModelTag.GROK].includes(model);
+  return [ModelTag.OPUS, ModelTag.FABLE, ModelTag.GROK, ModelTag.GPT].includes(
+    model,
+  );
 };
 
 const MODEL_LABELS: Record<ModelTag, string> = {
